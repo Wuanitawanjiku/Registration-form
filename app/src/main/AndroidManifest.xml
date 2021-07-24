@@ -10,8 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Registration">
-        <activity android:name=".LogIn"></activity>
-        <activity android:name=".CoursesActivity" />
+        <activity android:name=".LogIn"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".CoursesActivity"
+            android:parentActivityName=".LogIn"/>
         <activity android:name=".CourseDetailsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
