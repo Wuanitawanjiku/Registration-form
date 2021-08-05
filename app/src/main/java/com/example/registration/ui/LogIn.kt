@@ -64,7 +64,6 @@ class LogIn : AppCompatActivity() {
 
 
 
-
 //    fun views() {
 //        etEmailLogIn = findViewById(R.id.etEmailLogIn)
 //        etPasswordLogIn = findViewById(R.id.etPasswordLogIn)
