@@ -1,9 +1,12 @@
-package com.example.registration
+package com.example.registration.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.registration.CoursesAdapter
+import com.example.registration.R
+import com.example.registration.ui.Course
 
 class CoursesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
