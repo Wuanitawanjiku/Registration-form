@@ -20,22 +20,15 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val userViewModel: UserViewModel by viewModels()
-//    lateinit var etName: EditText
-//    lateinit var etDob: EditText
-//    lateinit var spNationality: Spinner
-//    lateinit var etPhoneNumber: EditText
-//    lateinit var etEmail: EditText
-//    lateinit var btnRegister: Button
-//    lateinit var etPassword: EditText
+
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        castViews()
-//        clickRegister()
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -49,17 +42,31 @@ class MainActivity : AppCompatActivity() {
             )
             userViewModel.registerStudent(regRequest)
         }
-
         userViewModel.registrationLiveData.observe(this, { regResponse->
             if (!regResponse.studentId.isNullOrEmpty()){
                 Toast.makeText(baseContext, "Registration successful", Toast.LENGTH_LONG).show()
             }
         })
-
         userViewModel.regFailedLiveData.observe(this, { error->
             Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
         })
     }
+
+
+
+
+//        castViews()
+//        clickRegister()
+
+//    lateinit var etName: EditText
+//    lateinit var etDob: EditText
+//    lateinit var spNationality: Spinner
+//    lateinit var etPhoneNumber: EditText
+//    lateinit var etEmail: EditText
+//    lateinit var btnRegister: Button
+//    lateinit var etPassword: EditText
+
+
 
 //    fun castViews(){
 //        etName = findViewById(R.id.etName)

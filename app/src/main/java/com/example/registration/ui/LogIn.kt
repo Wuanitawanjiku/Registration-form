@@ -26,18 +26,12 @@ class LogIn : AppCompatActivity() {
     lateinit var binding: ActivityLogInBinding
     val logInViewModel:LogInViewModel by viewModels()
     lateinit var sharedPreferences: SharedPreferences
-//    lateinit var etEmailLogIn: EditText
-//    lateinit var etPasswordLogIn: EditText
-//    lateinit var btnLogIn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLogInBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sharedPreferences = getSharedPreferences("CODEHIVE_REG_PREFS", Context.MODE_PRIVATE)
-//        views()
-//        logIn()
-
         binding.btnLogIn.setOnClickListener {
             var logInRequest = LogInRequest(binding.etEmailLogIn.text.toString(),
             binding.etPasswordLogIn.text.toString())
@@ -63,6 +57,22 @@ class LogIn : AppCompatActivity() {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+//        views()
+//        logIn()
+
+//    lateinit var etEmailLogIn: EditText
+//    lateinit var etPasswordLogIn: EditText
+//    lateinit var btnLogIn: Button
 
 //    fun views() {
 //        etEmailLogIn = findViewById(R.id.etEmailLogIn)
