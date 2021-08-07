@@ -4,18 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
-import com.example.registration.R
-import com.example.registration.api.ApiClient
-import com.example.registration.api.ApiInterface
 import com.example.registration.databinding.ActivityMainBinding
+import com.example.registration.models.LogInRequest
 import com.example.registration.models.RegistrationRequest
-import com.example.registration.models.RegistrationResponse
 import com.example.registration.viewmodel.UserViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -27,19 +22,50 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var nationality = arrayListOf<String>("Kenyan", "Ugandan", "Rwandese", "South Sudanes")
+        var nationalityAdapter =ArrayAdapter(baseContext, android.R.layout.simple_spinner_item, nationality)
+        binding.spNationality.adapter=nationalityAdapter
+        nationalityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     }
 
 
     override fun onResume() {
         super.onResume()
         binding.btnRegister.setOnClickListener{
+            if (binding.etName.text.toString().isEmpty()||
+                binding.etDob.text.toString().isEmpty()||
+                binding.etPhoneNumber.text.toString().isEmpty()||
+                binding.etEmail.text.toString().isEmpty() ||
+                binding.etPassword.text.toString().isEmpty()
+
+            ){
+
+                binding.etName.setError("Name required")
+                binding.etDob.setError("Date of birth required")
+                binding.etPhoneNumber.setError("Number required")
+                binding.etEmail.setError("Email required")
+                binding.etPassword.setError("Password required")
+
+            }
+
+            var name = binding.etName.text.toString()
+            var Dob = binding.etDob.text.toString()
+            var phoneNumber = binding.etPassword.text.toString()
+            var email = binding.etEmail.text.toString()
+            var password = binding.etPassword.text.toString()
+
             var regRequest = RegistrationRequest(
-                name = binding.etName.toString(),
+                name = binding.etName.text.toString(),
                 phoneNumber = binding.etPhoneNumber.text.toString(),
-                email = binding.etEmail.toString(),
+                email = binding.etEmail.text.toString(),
                 dateOfBirth = binding.etDob.text.toString(),
-                password = binding.etPassword.text.toString()
+                password = binding.etPassword.text.toString(),
+                nationality =binding.spNationality.selectedItem.toString().uppercase()
             )
+
+            var intent = Intent(baseContext, LogIn::class.java)
+            startActivity(intent)
+
             userViewModel.registerStudent(regRequest)
         }
         userViewModel.registrationLiveData.observe(this, { regResponse->
@@ -91,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 //                error = true
 //                etName.setError("Name is required")
 //            }
-//
+
 //            var dob = etDob.text.toString()
 //            if (dob.isEmpty()) {
 //                error = true
