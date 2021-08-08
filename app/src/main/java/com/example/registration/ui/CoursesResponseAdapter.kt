@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.models.CoursesResponse
-import com.example.registration.ui.Course
 
 class CoursesResponseAdapter (var courseResponse: List<CoursesResponse>): RecyclerView.Adapter<CoursesResponseViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesResponseViewHolder {

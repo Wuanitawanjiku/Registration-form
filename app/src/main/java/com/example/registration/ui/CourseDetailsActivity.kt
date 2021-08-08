@@ -1,6 +1,5 @@
 package com.example.registration.ui
 
-//import android.content.Intent
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
