@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity() {
         var nationalityAdapter =ArrayAdapter(baseContext, android.R.layout.simple_spinner_item, nationality)
         binding.spNationality.adapter=nationalityAdapter
         nationalityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.btnLogIn1.setOnClickListener {
+            var intent = Intent(baseContext, LogIn::class.java).apply {
+                startActivity(this)
+            }
+        }
     }
 
 

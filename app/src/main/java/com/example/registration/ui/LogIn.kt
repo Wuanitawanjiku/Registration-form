@@ -54,8 +54,8 @@ class LogIn : AppCompatActivity() {
         binding.tvLogInError.visibility=View.VISIBLE
             binding.tvLogInError.text = error
         })
-//        val intent = Intent(baseContext, CoursesActivity::class.java)
-//        startActivity(intent)
+        val intent = Intent(baseContext, CoursesActivity::class.java)
+        startActivity(intent)
     }
 
 
