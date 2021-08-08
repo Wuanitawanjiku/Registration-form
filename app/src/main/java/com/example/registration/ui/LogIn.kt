@@ -45,7 +45,6 @@ class LogIn : AppCompatActivity() {
             Toast.makeText(baseContext, logInResponse.message, Toast.LENGTH_LONG).show()
             var accessToken = logInResponse.accessToken
             sharedPreferences.edit().putString("ACCESS_TOKEN", accessToken).apply()
-
             var x = sharedPreferences.getString("ACCESS_TOKEN", "")
         })
 
@@ -57,6 +56,22 @@ class LogIn : AppCompatActivity() {
         val intent = Intent(baseContext, CoursesActivity::class.java)
         startActivity(intent)
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

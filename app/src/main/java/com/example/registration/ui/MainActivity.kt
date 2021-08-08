@@ -27,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         binding.spNationality.adapter=nationalityAdapter
         nationalityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.btnLogIn1.setOnClickListener {
-            var intent = Intent(baseContext, LogIn::class.java).apply {
-                startActivity(this)
-            }
+            var intent = Intent(baseContext, LogIn::class.java)
+            startActivity(intent)
         }
     }
 
@@ -44,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 binding.etPassword.text.toString().isEmpty()
 
             ){
-
                 binding.etName.setError("Name required")
                 binding.etDob.setError("Date of birth required")
                 binding.etPhoneNumber.setError("Number required")
