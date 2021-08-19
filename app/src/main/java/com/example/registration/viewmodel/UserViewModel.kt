@@ -17,7 +17,7 @@ class UserViewModel: ViewModel() {
         viewModelScope.launch {
             var response = userRepository.registerStudent(registrationRequest)
             if (response.isSuccessful){
-                registrationLiveData.postValue(response.body())
+                registrationLiveData.postValue(response.body())         //observes and waits for data to change and updates UI
             }
             else{
                 regFailedLiveData.postValue(response.errorBody()?.string())

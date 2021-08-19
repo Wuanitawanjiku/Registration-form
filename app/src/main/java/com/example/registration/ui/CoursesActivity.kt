@@ -33,6 +33,7 @@ class CoursesActivity : AppCompatActivity() {
         coursesViewModel.coursesLiveData.observe(this, { coursesResponse->
 
         })
+
     }
 }
 

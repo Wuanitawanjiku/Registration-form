@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class LogInViewModel:ViewModel() {
     var logInLiveData = MutableLiveData<LogInResponse>()
-    var logInFailedLiveData = MutableLiveData<String>()
+    var logInErrorLiveData = MutableLiveData<String>()
     var userRepository = UserRepository()
     
     fun logIn(logInRequest: LogInRequest){
@@ -20,7 +20,7 @@ class LogInViewModel:ViewModel() {
                 logInLiveData.postValue(response.body())
             }
             else{
-                logInFailedLiveData.postValue(response.errorBody()?.string())
+                logInErrorLiveData.postValue(response.errorBody()?.string())
             }
         }
     }

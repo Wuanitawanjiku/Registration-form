@@ -1,12 +1,15 @@
 package com.example.registration.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
+import com.example.registration.Constants
 import com.example.registration.databinding.ActivityMainBinding
 import com.example.registration.models.LogInRequest
 import com.example.registration.models.RegistrationRequest
@@ -15,7 +18,7 @@ import com.example.registration.viewmodel.UserViewModel
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val userViewModel: UserViewModel by viewModels()
-
+    lateinit var sharedPreferences: SharedPreferences
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,10 +32,21 @@ class MainActivity : AppCompatActivity() {
         binding.btnLogIn1.setOnClickListener {
             var intent = Intent(baseContext, LogIn::class.java)
             startActivity(intent)
+        sharedPreferences = getSharedPreferences(Constants.SHAREDPREFS, Context.MODE_PRIVATE)
+        }
+
+        fun redirectUser(){
+            var accessToken = sharedPreferences.getString(Constants.ACCESSTOKEN, Constants.EMPTY_STRING)
+            if (accessToken!!.isNotEmpty()){
+                startActivity(Intent(baseContext, CoursesActivity::class.java))
+            }
+            else{
+                startActivity(Intent(baseContext, LogIn::class.java))
+            }
         }
     }
 
-
+    //Read on android activity life cycle
     override fun onResume() {
         super.onResume()
         binding.btnRegister.setOnClickListener{
@@ -41,7 +55,6 @@ class MainActivity : AppCompatActivity() {
                 binding.etPhoneNumber.text.toString().isEmpty()||
                 binding.etEmail.text.toString().isEmpty() ||
                 binding.etPassword.text.toString().isEmpty()
-
             ){
                 binding.etName.setError("Name required")
                 binding.etDob.setError("Date of birth required")
