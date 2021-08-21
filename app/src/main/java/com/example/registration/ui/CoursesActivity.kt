@@ -1,39 +1,55 @@
 package com.example.registration.ui
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.registration.CoursesAdapter
-import com.example.registration.R
+import com.example.registration.Constants
 import com.example.registration.databinding.ActivityCoursesBinding
-import com.example.registration.databinding.ActivityLogInBinding
-import com.example.registration.ui.Course
 import com.example.registration.viewmodel.CoursesViewModel
-import com.example.registration.viewmodel.LogInViewModel
 
 class CoursesActivity : AppCompatActivity() {
-
     lateinit var binding: ActivityCoursesBinding
+    lateinit var sharedPreferences: SharedPreferences
     val coursesViewModel: CoursesViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_courses)
-
         binding = ActivityCoursesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        sharedPreferences = getSharedPreferences(Constants.SHAREDPREFS, Context.MODE_PRIVATE)
     }
 
     override fun onResume(){
         super.onResume()
-        coursesViewModel.coursesLiveData.observe(this, { coursesResponse->
+        var accessToken = sharedPreferences.getString(Constants.toString(),"ACCESS_TOKEN")
+//        var accessToken = sharedPreferences.getString(Constants.ACCESSTOKEN, Constants.EMPTY_STRING)
+        var bearer = "Bearer $accessToken"
 
+        //Log user out if access token is empty
+        //how to read shared preferences from the adapter
+        if (accessToken!!.isNotEmpty()){
+        coursesViewModel.coursesList(accessToken)
+        }
+        else{
+            startActivity(Intent(baseContext, LogIn::class.java))
+        }
+        var rvCoursesResponseAdapter = binding.rvCourses
+        rvCoursesResponseAdapter.layoutManager = LinearLayoutManager(baseContext)
+        coursesViewModel.coursesLiveData.observe(this, {coursesList->
+
+            var coursesResponseAdapter = CoursesResponseAdapter(coursesList)
+            rvCoursesResponseAdapter.adapter = coursesResponseAdapter
+           Toast.makeText(baseContext, "${coursesList.size} courses fetched", Toast.LENGTH_LONG).show()
         })
-
+        coursesViewModel.coursesFailedLiveData.observe(this, {
+            error->Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
+        })
     }
 }
 

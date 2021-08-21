@@ -17,34 +17,38 @@ import com.example.registration.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    val userViewModel: UserViewModel by viewModels()
     lateinit var sharedPreferences: SharedPreferences
+    val userViewModel: UserViewModel by viewModels()
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         var nationality = arrayListOf<String>("Kenyan", "Ugandan", "Rwandese", "South Sudanes")
         var nationalityAdapter =ArrayAdapter(baseContext, android.R.layout.simple_spinner_item, nationality)
         binding.spNationality.adapter=nationalityAdapter
         nationalityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         binding.btnLogIn1.setOnClickListener {
             var intent = Intent(baseContext, LogIn::class.java)
             startActivity(intent)
         sharedPreferences = getSharedPreferences(Constants.SHAREDPREFS, Context.MODE_PRIVATE)
-        }
-
-        fun redirectUser(){
-            var accessToken = sharedPreferences.getString(Constants.ACCESSTOKEN, Constants.EMPTY_STRING)
-            if (accessToken!!.isNotEmpty()){
-                startActivity(Intent(baseContext, CoursesActivity::class.java))
-            }
-            else{
-                startActivity(Intent(baseContext, LogIn::class.java))
-            }
+            redirectUser()
         }
     }
+
+    fun redirectUser(){
+        var accessToken = sharedPreferences.getString(Constants.ACCESSTOKEN, Constants.EMPTY_STRING)
+        if (accessToken!!.isNotEmpty()){
+            startActivity(Intent(baseContext, CoursesActivity::class.java))
+        }
+        else{
+            startActivity(Intent(baseContext, LogIn::class.java))
+        }
+    }
+
 
     //Read on android activity life cycle
     override fun onResume() {
@@ -64,12 +68,6 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            var name = binding.etName.text.toString()
-            var Dob = binding.etDob.text.toString()
-            var phoneNumber = binding.etPassword.text.toString()
-            var email = binding.etEmail.text.toString()
-            var password = binding.etPassword.text.toString()
-
             var regRequest = RegistrationRequest(
                 name = binding.etName.text.toString(),
                 phoneNumber = binding.etPhoneNumber.text.toString(),
@@ -78,7 +76,6 @@ class MainActivity : AppCompatActivity() {
                 password = binding.etPassword.text.toString(),
                 nationality =binding.spNationality.selectedItem.toString().uppercase()
             )
-
             var intent = Intent(baseContext, LogIn::class.java)
             startActivity(intent)
 
@@ -108,6 +105,11 @@ class MainActivity : AppCompatActivity() {
 //    lateinit var btnRegister: Button
 //    lateinit var etPassword: EditText
 
+//var name = binding.etName.text.toString()
+//var Dob = binding.etDob.text.toString()
+//var phoneNumber = binding.etPassword.text.toString()
+//var email = binding.etEmail.text.toString()
+//var password = binding.etPassword.text.toString()
 
 
 //    fun castViews(){

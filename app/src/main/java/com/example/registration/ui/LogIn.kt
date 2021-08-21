@@ -45,12 +45,14 @@ class LogIn : AppCompatActivity() {
         super.onResume()
         binding.btnLogIn.setOnClickListener {
         binding.tvLogInError.visibility  = View.GONE
-        validateLogIn()
         }
+        validateLogIn()
+
         logInViewModel.logInLiveData.observe(this, {logInResponse->
             binding.pbLogIn.visibility = View.GONE
             Toast.makeText(baseContext, logInResponse.message, Toast.LENGTH_LONG).show()
-//            var accessToken = logInResponse.accessToken
+//          var accessToken = logInResponse.accessToken
+
             var editor = sharedPreferences.edit()
             sharedPreferences.edit().putString(Constants.ACCESSTOKEN, logInResponse.accessToken).apply()
             editor.putString(Constants.ACCESSTOKEN, logInResponse.accessToken)
@@ -63,7 +65,7 @@ class LogIn : AppCompatActivity() {
         })
 
         logInViewModel.logInErrorLiveData.observe(this, {error->
-//        Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
+//      Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
         binding.tvLogInError.visibility=View.VISIBLE
         binding.tvLogInError.text = error
         })
@@ -71,12 +73,12 @@ class LogIn : AppCompatActivity() {
 
 
     fun validateLogIn(){
-        var email = binding.etEmailLogIn.text.toString()
-        var password = binding.etPasswordLogIn.text.toString()
-        var error = false
+        val email = binding.etEmailLogIn.text.toString()
+        val password = binding.etPasswordLogIn.text.toString()
+        val error = false
 
         if (email.isBlank() || email.isEmpty()){
-            var error = true
+            val error = true
             binding.etEmailLogIn.setError("Email is required")
         }
         if (password.isBlank() || password.isEmpty()){
@@ -85,6 +87,11 @@ class LogIn : AppCompatActivity() {
         }
         if (!error){
             binding.pbLogIn.visibility = View.GONE
+            var logInRequest = LogInRequest(
+                email = email,
+                password = password
+            )
+            logInViewModel.logIn(logInRequest)
         }
     }
 

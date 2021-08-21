@@ -1,7 +1,6 @@
 package com.example.registration.api
 
 import com.example.registration.models.*
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,4 +16,7 @@ interface ApiInterface {
 
     @GET("/courses")
     suspend fun studentCourses(@Header("Authorization") token: String): Response<List<CoursesResponse>>
+
+    @POST("/enrolments")
+    suspend fun enrol(@Header("Authorization") token: String): Response<EnrolmentResponse>
 }

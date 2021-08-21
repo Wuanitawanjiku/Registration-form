@@ -15,7 +15,7 @@ class LogInViewModel:ViewModel() {
     
     fun logIn(logInRequest: LogInRequest){
         viewModelScope.launch { 
-            var response = userRepository.login(logInRequest,)
+            var response = userRepository.login(logInRequest)
             if (response.isSuccessful){
                 logInLiveData.postValue(response.body())
             }

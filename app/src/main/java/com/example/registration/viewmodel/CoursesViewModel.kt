@@ -12,9 +12,9 @@ class CoursesViewModel: ViewModel() {
         var coursesFailedLiveData = MutableLiveData<String>()
         var coursesRepository = CoursesRepository()
 
-        fun coursesList(){
+        fun coursesList(accessToken: String){
             viewModelScope.launch {
-                var response = coursesRepository.courses()
+                var response = coursesRepository.courses(accessToken)
                 if (response.isSuccessful){
                     coursesLiveData.postValue(response.body())
                 }
